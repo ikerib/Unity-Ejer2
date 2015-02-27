@@ -8,7 +8,9 @@ public class Cubo : MonoBehaviour {
 	public float maxLeft;
 	public float maxRight;
 	public DebugMessages dLog;
-	
+	public int vidas;
+	public GUIText gameOverText;
+	private bool gameOver;
 	// Variables privadas del script
 	Transform myTransform;
 	int sentido;
@@ -22,10 +24,13 @@ public class Cubo : MonoBehaviour {
 		if (velocidad == 0)
 			velocidad = 1;
 		if (maxLeft == 0)
-			maxLeft = -8f;
+			maxLeft = -6f;
 		if (maxRight == 0)
-			maxRight = 8f;
+			maxRight = 6f;
+		if (vidas == 0)
+			vidas = 3;
 		sentido = 1;
+
 
 	}
 	
@@ -53,5 +58,18 @@ public class Cubo : MonoBehaviour {
 		// realizamos el movimiento
 		myTransform.Translate (Vector3.right * velocidad * sentido * Time.deltaTime);
 		
+	}
+
+	public void DisminuirVidas() {
+		vidas -= 1;
+		if ( vidas < 1 ){
+			GameOver();
+			Debug.Log ("Fin");
+		} 
+	}
+	public void GameOver ()
+	{
+		gameOverText.text = "Game Over!";
+		gameOver = true;
 	}
 }
