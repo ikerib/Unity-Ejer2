@@ -9,7 +9,7 @@ public class Cubo : MonoBehaviour {
 	public float maxRight;
 	public DebugMessages dLog;
 	public int vidas;
-	public GUIText gameOverText;
+
 	private bool gameOver;
 	// Variables privadas del script
 	Transform myTransform;
@@ -69,7 +69,6 @@ public class Cubo : MonoBehaviour {
 	}
 	public void GameOver ()
 	{
-		gameOverText.text = "Game Over!";
-		gameOver = true;
+		Debug.Log ("GameOver");
 	}
 }

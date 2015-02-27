@@ -25,6 +25,6 @@ public class Bala : MonoBehaviour {
 			myCubo.DisminuirVidas();
 			Debug.Log ("Choque!");
 		}
-		Destroy(gameObject);
+		Destroy(gameObject);  
 	}
 }
