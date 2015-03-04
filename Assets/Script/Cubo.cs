@@ -6,50 +6,47 @@ public class Cubo : MonoBehaviour
 	
 		// Variables publicas para el acceso desde el diseñador
 		public float velocidad;
-		public float maxLeft;
-		public float maxRight;
+		public Transform target;
 		public DebugMessages dLog;
 		public int vidas;
 
 		// Variables privadas del script
 		Transform myTransform;
-		int sentido;
+		
 		private bool gameOver; // Constrola si hay que finalizar el juego o no
-	
+		private int sentido=-1;
+		// Al tener paredes fijas, no necesitamos variables publicas. Seran fijas.
+		private static Vector3 maxLeft= new Vector3(6f,0,0);
+		private static Vector3 maxRight=new Vector3(-6f,0,0);
+		private Vector3 dest = new Vector3(0,0,0);
 		// Use this for initialization
 		void Start ()
 		{
-		
 				// Variables iniciales. Si estan a nulo, establecemos valores por defecto
 				myTransform = this.transform;
 				if (velocidad == 0)
 						velocidad = 1;
-				if (maxLeft == 0)
-						maxLeft = -6f;
-				if (maxRight == 0)
-						maxRight = 6f;
 				if (vidas == 0)
 						vidas = 3;
-				sentido = 1;
 				gameOver = false;
-
+				dest = maxLeft;
 
 		}
 	
 		// Update is called once per frame
-		void Update ()
+		void FixedUpdate ()
 		{
-				// comprobamos si estamos dentro de los limites
-				if (((myTransform.position.x <= maxLeft) && (sentido == -1)) 
-		    ||
-						((myTransform.position.x >= maxRight) && (sentido == 1))) {
-						// Si entra es que en el siguiente frame pasaría de los limites
-						// por lo que cambiamos de sentido
-						sentido *= -1;
-				}
-		
-				// realizamos el movimiento
-				myTransform.Translate (Vector3.right * velocidad * sentido * Time.deltaTime);
+			if (( dest.x - 0.5f < myTransform.position.x) && (sentido == -1)) {
+				Debug.Log("******* TTAK *******");
+				sentido = 1;
+				dest = maxRight;
+			} else if (( dest.x + 0.5f > myTransform.position.x) && (sentido == 1)) {
+				Debug.Log("ttak2");
+				sentido = -1;
+				dest = maxLeft;
+			}
+				
+			myTransform.position = Vector3.Lerp(transform.position, dest, Time.deltaTime); 
 		
 		}
 
